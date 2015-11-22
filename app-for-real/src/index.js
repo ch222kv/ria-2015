@@ -111,8 +111,8 @@ const ContactEntry = React.createClass({
 			<div>
 				{element} {this.state.editing === true ? 'Yes' : 'No'}
 				<label onClick={this.handleDoubleClick}>
-				Edit
-          		</label>
+						Edit
+				</label>
 			</div>
 			);
 	}
@@ -151,8 +151,8 @@ const NewAppCont = connect(stateToProp, dispatchToProps)(NewApp);
 
 ReactDOM.render((
 	<Provider store={new_store}>
-	  <Router>
-	    <Route path="/" component={NewAppCont} />
-	  </Router>
+		<Router>
+	  		<Route path="/" component={NewAppCont} />
+		</Router>
   </Provider>
 ), document.getElementById("root"))
