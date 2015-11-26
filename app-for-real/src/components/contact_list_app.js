@@ -7,14 +7,23 @@ var React = require('react'),
     ContactList = require("./contact_list"),
     actions = require("../actions");
 
+import ContactProfilePage from "./contact_profile_page";
+
 const { connect } = ReactRedux;
 const NewApp = React.createClass({
     render(){
+        if(this.props.params.id){
+            console.log("id", this.props.params.id);
+            var profile_page = <div><h1>What now</h1><ContactProfilePage /></div>;
+        }
         console.log(this);
+
+
         return(
             <div>
                 <ContactEntryInput onSubmit={this.props.contactAdded} />
                 <ContactList contacts={this.props.contacts} />
+                {profile_page}
             </div>
         );
     }

@@ -25,15 +25,23 @@ const Home = require("./components/home");
  * Let's create a store.
  */
 
+const EasyComponent = React.createClass({
+    render(){
+        return(
+            <h2>Easy Component</h2>
+        );
+    }
+});
+
 ReactDOM.render((
     <Provider store={new_store}>
         <Router>
             <Route path="/" component={Wrapper}>
-                <IndexRoute component={NewAppCont}>
-
-                    </IndexRoute>
-                <Route path="test" component={Home}/>
-                </Route>
+                <IndexRoute component={NewAppCont} />
+                <Route path="contact/:id" component={NewAppCont}>
+                    <Route path="test" component={EasyComponent}/>
+                    </Route>
+            </Route>
         </Router>
     </Provider>
 ), document.getElementById("root"))

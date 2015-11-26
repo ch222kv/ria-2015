@@ -3,15 +3,16 @@
  */
 
 const React = require('react');
+import {Link} from "react-router";
 const ContactEntry = React.createClass({
     getInitialState(){
         return {editing: false};
     },
-    handleDoubleClick(){
+    handleClick(){
         this.setState({editing: true});
     },
     handleSave(id, text){
-        if(text.length === 0){
+        if (text.length === 0) {
             this.props.deleteContact(id);
         } else {
             this.props.editContact(id, text);
@@ -22,15 +23,16 @@ const ContactEntry = React.createClass({
         console.log("Rendering entry", this);
         var contact = this.props.contact;
 
-        if(this.state.editing){
-            var element = <ContactEntryInput onSubmit={(text)=>this.handleSave(contact.id, text)}  name={this.props.name}/>;
+        if (this.state.editing) {
+            var element = <ContactEntryInput onSubmit={(text)=>this.handleSave(contact.id, text)}
+                                             name={this.props.name}/>;
         } else {
-            element = <label>{this.props.name}</label>;
+            element = <label><Link to={"/contact/" + this.props.name}>{this.props.name}</Link></label>;
         }
-        return(
+        return (
             <div>
                 {element} {this.state.editing === true ? 'Yes' : 'No'}
-                <label onClick={this.handleDoubleClick}>
+                <label onClick={this.handleClick}>
                     Edit
                 </label>
             </div>
@@ -45,7 +47,7 @@ const ContactEntryInput = React.createClass({
         this.refs.input.value = '';
     },
     render(){
-        return(
+        return (
             <div>
                 <input type="text" ref="input" defaultValue={this.props.name}/>
                 <button onClick={this.handleSubmit}>
