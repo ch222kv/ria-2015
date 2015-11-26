@@ -1,10 +1,13 @@
 /**
  * Created by Chrille on 2015-11-20.
  */
+const ContactEntry = require("./contact_entry").ContactEntry;
+const Link = require('react-router').Link;
+
+const React = require('react');
 const ContactList = React.createClass({
     render(){
-        console.log("Contact list", this);
-        console.log(new_store.getState());
+        console.log(this.props);
         const contacts = this.props.contacts;
         const contactElements = contacts.contacts.map(contact =>
             <ContactEntry name={contact.name} key={contact.id} contact={contact}/>
@@ -12,6 +15,7 @@ const ContactList = React.createClass({
         return(
             <div>
                 <h1>Contact List</h1>
+                <Link to="#/test">Test</Link>
                 <div>
                     {contactElements}
                 </div>
@@ -21,4 +25,4 @@ const ContactList = React.createClass({
     }
 });
 
-export default ContactList;
+module.exports = ContactList;

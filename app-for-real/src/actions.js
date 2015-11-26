@@ -29,5 +29,8 @@ module.exports = {
 				dispatch({type:constants.KILL_HERO,killer:killer,victim:victim});
 			},2000);
 		};
+	},
+	addContact(name){
+		return {type: constants.CONTACT_ADDED, name: name};
 	}
 };

@@ -1,6 +1,8 @@
 /**
  * Created by Chrille on 2015-11-20.
  */
+
+const React = require('react');
 const ContactEntry = React.createClass({
     getInitialState(){
         return {editing: false};
@@ -53,5 +55,7 @@ const ContactEntryInput = React.createClass({
         );
     }
 })
-
-export ContactEntry, ContactEntryInput
+module.exports = {
+    ContactEntry: ContactEntry,
+    ContactEntryInput: ContactEntryInput
+}

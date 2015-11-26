@@ -1,7 +1,6 @@
 /*
 This file contains all constants in the app.
 */
-
 module.exports = {
 	// ACTION TYPES
 	AIM_AT: "AIM_AT",
@@ -14,5 +13,6 @@ module.exports = {
 	AIMING: "AIMING",
 	DUCKING: "DUCKING",
 	WAITING: "WAITING",
-	DEAD: "DEAD"
-};
+	DEAD: "DEAD",
+	CONTACT_ADDED: "CONTACT_ADDED"
+}
