@@ -1,15 +1,16 @@
 /**
  * Created by Chrille on 2015-11-20.
  */
-const ContactEntry = require("./contact_entry").ContactEntry;
-const Link = require('react-router').Link;
 
-const React = require('react');
+import {ContactEntry} from "./contact_entry";
+import {Link} from "react-router";
+import React from "react";
+
 const ContactList = React.createClass({
     render(){
         console.log(this.props);
         const contacts = this.props.contacts;
-        const contactElements = contacts.contacts.map(contact =>
+        const contactElements = contacts.map(contact =>
             <ContactEntry name={contact.name} key={contact.id} contact={contact}/>
         );
         return(
@@ -24,5 +25,5 @@ const ContactList = React.createClass({
         );
     }
 });
-
+export default ContactList;
 module.exports = ContactList;

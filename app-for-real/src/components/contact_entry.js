@@ -2,8 +2,9 @@
  * Created by Chrille on 2015-11-20.
  */
 
-const React = require('react');
+import React from "react";
 import {Link} from "react-router";
+
 const ContactEntry = React.createClass({
     getInitialState(){
         return {editing: false};
@@ -27,7 +28,7 @@ const ContactEntry = React.createClass({
             var element = <ContactEntryInput onSubmit={(text)=>this.handleSave(contact.id, text)}
                                              name={this.props.name}/>;
         } else {
-            element = <label><Link to={"/contact/" + this.props.name}>{this.props.name}</Link></label>;
+            element = <label><Link to={"/contacts/" + this.props.name}>{this.props.name}</Link></label>;
         }
         return (
             <div>
@@ -56,8 +57,12 @@ const ContactEntryInput = React.createClass({
             </div>
         );
     }
-})
+});
 module.exports = {
-    ContactEntry: ContactEntry,
-    ContactEntryInput: ContactEntryInput
-}
+    ContactEntry,
+    ContactEntryInput
+};
+export default {
+    ContactEntry,
+    ContactEntryInput
+};

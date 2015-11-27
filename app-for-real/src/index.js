@@ -19,16 +19,22 @@ const { connect } = ReactRedux;
 const new_store = require("./store");
 const Wrapper = require("./components/wrapper");
 const NewAppCont = require("./components/contact_list_app");
-const Home = require("./components/home");
 
 /*
  * Let's create a store.
  */
 
+const Home = React.createClass({
+    render(){
+        return (
+            <Link to={'/contacts'}>Go to your contacts.</Link>
+        )
+    }
+});
 const EasyComponent = React.createClass({
     render(){
-        return(
-            <h2>Easy Component</h2>
+        return (
+            <h2>Easy Component{this.props.params.id}</h2>
         );
     }
 });
@@ -37,10 +43,10 @@ ReactDOM.render((
     <Provider store={new_store}>
         <Router>
             <Route path="/" component={Wrapper}>
-                <IndexRoute component={NewAppCont} />
-                <Route path="contact/:id" component={NewAppCont}>
-                    <Route path="test" component={EasyComponent}/>
-                    </Route>
+                <IndexRoute component={Home}/>
+                <Route path="/contacts" component={NewAppCont}>
+                    <Route path="/contacts/:name" component={EasyComponent}/>
+                </Route>
             </Route>
         </Router>
     </Provider>

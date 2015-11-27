@@ -1,37 +1,53 @@
 /**
  * Created by Chrille on 2015-11-20.
  */
-var React = require('react'),
-    ReactRedux = require("react-redux"),
-    ContactEntryInput = require("./contact_entry").ContactEntryInput,
-    ContactList = require("./contact_list"),
-    actions = require("../actions");
+
+import React from "react";
+import {ContactEntryInput} from "./contact_entry";
+import ContactList from "./contact_list";
+import actions from "../actions";
 
 import ContactProfilePage from "./contact_profile_page";
+import Search from "./search";
 
-const { connect } = ReactRedux;
+import ReactRedux, { connect } from "react-redux";
 const NewApp = React.createClass({
+    filterContacts(){
+
+    },
+    getInitialState(){
+        return {
+            displayProfilePage: false
+        };
+    },
+    getContactByName(name){
+        console.log("contacts", this.props.contacts);
+        return this.props.contacts.filter((contact)=>contact.name === name)[0];
+    },
     render(){
-        if(this.props.params.id){
-            console.log("id", this.props.params.id);
-            var profile_page = <div><h1>What now</h1><ContactProfilePage /></div>;
+        console.log("Conctact-list-app, params", this.props.params.name);
+        let profile_page;
+        if (this.props.params.name !== undefined) {
+            profile_page = <div><h1>What now</h1>
+                <ContactProfilePage
+                contact={this.getContactByName(this.props.params.name)}/></div>;
         }
-        console.log(this);
 
 
-        return(
+        return (
             <div>
-                <ContactEntryInput onSubmit={this.props.contactAdded} />
-                <ContactList contacts={this.props.contacts} />
+                <Search onChange={this.filterContacts}/>
+                <ContactEntryInput onSubmit={this.props.contactAdded}/>
+                <ContactList contacts={this.props.contacts}/>
                 {profile_page}
             </div>
         );
     }
-})
+});
 
 const stateToProp = (state) => {
     return {
-        contacts: state.contacts
+        contacts: state.contacts.contacts
     };
 };
 const dispatchToProps = (dispatch) => {
@@ -40,4 +56,5 @@ const dispatchToProps = (dispatch) => {
     };
 };
 const NewAppCont = connect(stateToProp, dispatchToProps)(NewApp);
+export default NewAppCont;
 module.exports = NewAppCont;

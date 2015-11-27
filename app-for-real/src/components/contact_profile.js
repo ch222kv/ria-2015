@@ -5,13 +5,16 @@
 const React = require('react');
 const ContactProfile = React.createClass({
     render(){
+        console.log("Contact profile", this);
         return (
             <div>
-                {this.props.contact}
-            Profile name here
+                <div>
+                    <img style={{width: "200px", height: "200px", position: "relative"}} />
+                </div>
+                {this.props.contact.name}
             </div>
         );
     }
 });
-
+export default ContactProfile;
 module.exports = ContactProfile;
