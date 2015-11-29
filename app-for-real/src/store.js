@@ -1,15 +1,17 @@
 /*
-This file defines the main Redux Store. It will be required by all "smart" components in the app,
-in our case Home and Hero.
-*/
+ This file defines the main Redux Store. It will be required by all "smart" components in the app,
+ in our case Home and Hero.
+ */
 
-var Redux = require("redux"),
-	contactsReducer = require("./reducers/contacts"),
-	battlefieldReducer = require("./reducers/battlefield"),
-	initialState = require("./initialstate"),
-	thunk = require('redux-thunk'); // allows us to use asynchronous actions
+import Redux, {combineReducers, applyMiddleware, createStore} from "redux";
+import contactsReducer from "./reducers/contacts";
+import initialState from "./initialstate";
+import thunk from "redux-thunk";
 
-var rootReducer = Redux.combineReducers({
-	contacts: contactsReducer
+const rootReducer = combineReducers({
+    contacts: contactsReducer
 });
-module.exports = Redux.applyMiddleware(thunk)(Redux.createStore)(rootReducer, initialState());
+const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState());
+
+module.exports = store;
+export default store;

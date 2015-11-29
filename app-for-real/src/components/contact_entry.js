@@ -4,6 +4,7 @@
 
 import React from "react";
 import {Link} from "react-router";
+import _ from "lodash";
 
 const ContactEntry = React.createClass({
     getInitialState(){
@@ -32,7 +33,7 @@ const ContactEntry = React.createClass({
         }
         return (
             <div>
-                {element} {this.state.editing === true ? 'Yes' : 'No'}
+                {element}
                 <label onClick={this.handleClick}>
                     Edit
                 </label>
@@ -43,14 +44,14 @@ const ContactEntry = React.createClass({
 
 const ContactEntryInput = React.createClass({
     handleSubmit(e){
-        const text = this.refs.input.value.trim();
+        const text = this.refs.name.value.trim();
         this.props.onSubmit(text);
-        this.refs.input.value = '';
+        _.map(this.refs, (input)=>input.value = '');
     },
     render(){
         return (
             <div>
-                <input type="text" ref="input" defaultValue={this.props.name}/>
+                <input type="text" ref="name" defaultValue={this.props.name}/>
                 <button onClick={this.handleSubmit}>
                     Save contact
                 </button>

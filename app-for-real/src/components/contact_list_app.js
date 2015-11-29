@@ -6,40 +6,50 @@ import React from "react";
 import {ContactEntryInput} from "./contact_entry";
 import ContactList from "./contact_list";
 import actions from "../actions";
+import _ from "lodash";
 
 import ContactProfilePage from "./contact_profile_page";
 import Search from "./search";
 
 import ReactRedux, { connect } from "react-redux";
-const NewApp = React.createClass({
-    filterContacts(){
 
-    },
+const NewApp = React.createClass({
     getInitialState(){
         return {
-            displayProfilePage: false
+            addingContact: false
         };
     },
+    contactAdded(name){
+        //this.setState(this.state);
+        this.props.contactAdded(name);
+    },
     getContactByName(name){
-        console.log("contacts", this.props.contacts);
-        return this.props.contacts.filter((contact)=>contact.name === name)[0];
+        console.log("contacts", this.props);
+        return this.props.contacts.contacts.filter((contact)=>contact.name === name)[0];
+    },
+    beginAddContact(){
+        this.setState({addingContact: true});
+    },
+    endAddContact(){
+        this.setState({addingContact: false});
     },
     render(){
-        console.log("Conctact-list-app, params", this.props.params.name);
-        let profile_page;
-        if (this.props.params.name !== undefined) {
-            profile_page = <div><h1>What now</h1>
-                <ContactProfilePage
-                contact={this.getContactByName(this.props.params.name)}/></div>;
-        }
+        const contacts = this.props.contacts.contacts;
+        let addContactElement;
 
+        if (this.state.addingContact) {
+            addContactElement = <div><ContactEntryInput onSubmit={this.contactAdded}/>
+                <button onClick={this.endAddContact}>Stop adding</button>
+            </div>;
+        } else {
+            addContactElement = <button onClick={this.beginAddContact}>Add contact</button>;
+        }
 
         return (
             <div>
-                <Search onChange={this.filterContacts}/>
-                <ContactEntryInput onSubmit={this.props.contactAdded}/>
-                <ContactList contacts={this.props.contacts}/>
-                {profile_page}
+                {addContactElement}
+                <ContactList contacts={contacts} onContactAdded={this.contactAdded} stateish={this.state.what}/>
+                {this.props.children}
             </div>
         );
     }
@@ -47,7 +57,7 @@ const NewApp = React.createClass({
 
 const stateToProp = (state) => {
     return {
-        contacts: state.contacts.contacts
+        contacts: state.contacts
     };
 };
 const dispatchToProps = (dispatch) => {

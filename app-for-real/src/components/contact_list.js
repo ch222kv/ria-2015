@@ -8,15 +8,16 @@ import React from "react";
 
 const ContactList = React.createClass({
     render(){
-        console.log(this.props);
+        console.log("Contactlist props", this.props);
         const contacts = this.props.contacts;
         const contactElements = contacts.map(contact =>
             <ContactEntry name={contact.name} key={contact.id} contact={contact}/>
         );
-        return(
+        return (
             <div>
                 <h1>Contact List</h1>
-                <Link to="#/test">Test</Link>
+                <Link to="#/test">Home</Link>
+                {this.props.stateish ? "yes" : "no"}
                 <div>
                     {contactElements}
                 </div>
