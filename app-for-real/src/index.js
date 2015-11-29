@@ -24,4 +24,4 @@ ReactDOM.render((
     <Provider store={new_store}>
         <Router routes={routes} />
     </Provider>
-), document.getElementById("root"))
+), document.getElementById("root"));

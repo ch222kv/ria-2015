@@ -14,14 +14,22 @@ import Search from "./search";
 import ReactRedux, { connect } from "react-redux";
 
 const NewApp = React.createClass({
+    getDefaultProps(){
+        return {
+            contacts: {contacts: []},
+        };
+    },
     getInitialState(){
         return {
             addingContact: false
         };
     },
-    contactAdded(name){
-        //this.setState(this.state);
-        this.props.contactAdded(name);
+    contactAdded(contact){
+        this.props.contactAdded(contact);
+    },
+    removeContact(id){
+        this.props.contactRemoved(id);
+        this.props.history.pushState(null, '/contacts/');
     },
     getContactByName(name){
         console.log("contacts", this.props);
@@ -44,12 +52,16 @@ const NewApp = React.createClass({
         } else {
             addContactElement = <button onClick={this.beginAddContact}>Add contact</button>;
         }
-
+        let profilePage;
+        if (this.props.params.name) {
+            profilePage = <ContactProfilePage onRemoveContact={this.removeContact}
+                                              contact={this.getContactByName(this.props.params.name)}/>
+        }
         return (
             <div>
                 {addContactElement}
-                <ContactList contacts={contacts} onContactAdded={this.contactAdded} stateish={this.state.what}/>
-                {this.props.children}
+                <ContactList contacts={contacts} onContactAdded={this.contactAdded}/>
+                {profilePage}
             </div>
         );
     }
@@ -63,6 +75,7 @@ const stateToProp = (state) => {
 const dispatchToProps = (dispatch) => {
     return {
         contactAdded: (name) => dispatch(actions.addContact(name)),
+        contactRemoved: (id) => dispatch(actions.removeContact(id)),
     };
 };
 const NewAppCont = connect(stateToProp, dispatchToProps)(NewApp);

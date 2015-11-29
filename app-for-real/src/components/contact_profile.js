@@ -12,8 +12,12 @@ const ContactProfile = React.createClass({
                 <div>
                     <img style={{width: "200px", height: "200px", position: "relative"}}/>
                 </div>
-                {this.props.contact.name}
+                <div>Name: <label>{this.props.contact.name}</label></div>
+                <div>Age: <label>{this.props.contact.age}</label></div>
+                <div>Phonenumber: <label>{this.props.contact.phonenumber}</label></div>
                 <button>Edit this contact</button>
+                <button onClick={this.props.onRemoveContact.bind(null, this.props.contact.id)}>Remove this contact
+                </button>
             </div>
         );
     }

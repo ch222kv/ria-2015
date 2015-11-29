@@ -9,14 +9,14 @@ import {getContactByName} from "../helpers";
 
 const ContactProfilePage = React.createClass({
     render(){
-        const contact = getContactByName(this.props.params.name);
+        const contact = this.props.contact;
         console.log("Contact profile page", this.props);
         if (contact) {
             return (
                 <div className={contact === undefined ? "profile-page hidden" : "profile-page"}>
                     <h1>{contact.name}</h1>
                     <Link to={'/contacts'} className="close-button">X</Link>
-                    <ContactProfile contact={contact}/>
+                    <ContactProfile contact={contact} onRemoveContact={this.props.onRemoveContact}/>
                 </div>
             );
         } else {

@@ -7,6 +7,11 @@ import {Link} from "react-router";
 import React from "react";
 
 const ContactList = React.createClass({
+    getDefaultProps(){
+        return {
+            contacts: []
+        };
+    },
     render(){
         console.log("Contactlist props", this.props);
         const contacts = this.props.contacts;

@@ -31,8 +31,11 @@ const actions = {
             }, 2000);
         };
     },
-    addContact(name){
-        return {type: constants.CONTACT_ADDED, name: name};
+    addContact(contact){
+        return {type: constants.CONTACT_ADDED, contact};
+    },
+    removeContact(id){
+        return {type: constants.CONTACT_REMOVED, id};
     }
 };
 module.exports = actions;

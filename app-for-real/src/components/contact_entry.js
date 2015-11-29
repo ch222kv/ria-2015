@@ -27,9 +27,12 @@ const ContactEntry = React.createClass({
 
         if (this.state.editing) {
             var element = <ContactEntryInput onSubmit={(text)=>this.handleSave(contact.id, text)}
-                                             name={this.props.name}/>;
+                                             contact={contact}/>;
         } else {
-            element = <label><Link to={"/contacts/" + this.props.name}>{this.props.name}</Link></label>;
+            element = (
+                <label>
+                    <Link to={"/contacts/" + contact.name}>{contact.name}</Link>
+                </label>);
         }
         return (
             <div>
@@ -43,15 +46,31 @@ const ContactEntry = React.createClass({
 });
 
 const ContactEntryInput = React.createClass({
+    getDefaultProps(){
+        return {
+            contact: {
+                name: "",
+                age: "",
+                phonenumber: ""
+            }
+        }
+    },
     handleSubmit(e){
-        const text = this.refs.name.value.trim();
-        this.props.onSubmit(text);
+        const contact = {
+            name: this.refs.name.value.trim(),
+            age: this.refs.age.value.trim(),
+            phonenumber: this.refs.phonenumber.value.trim()
+        };
+        this.props.onSubmit(contact);
         _.map(this.refs, (input)=>input.value = '');
     },
     render(){
         return (
             <div>
-                <input type="text" ref="name" defaultValue={this.props.name}/>
+                <div><input type="text" ref="name" defaultValue={this.props.contact.name} placeholder="Name"/></div>
+                <div><input type="number" ref="age" defaultValue={this.props.contact.age} placeholder="Age"/></div>
+                <div><input type="text" ref="phonenumber" defaultValue={this.props.contact.phonenumber}
+                            placeholder="Phonenumber"/></div>
                 <button onClick={this.handleSubmit}>
                     Save contact
                 </button>

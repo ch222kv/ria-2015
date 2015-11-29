@@ -9,7 +9,7 @@ import C from "./constants";
 const initialstate = ()=> {
     return {
         contacts: [
-            {id: 1, name: "Christoffer Holmgren"}
+            {id: 1, name: "Christoffer Holmgren", phonenumber: "073 823 44 60", age: 21}
         ]
     }
 };
