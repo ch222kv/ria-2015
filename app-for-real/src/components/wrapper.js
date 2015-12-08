@@ -10,6 +10,7 @@ var Wrapper = React.createClass({
         return (
             <div className="wrapper">
                 <h2>Towes kontaktlista!</h2>
+
                 {this.props.children}
             </div>
         );

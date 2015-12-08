@@ -36,6 +36,9 @@ const actions = {
     },
     removeContact(id){
         return {type: constants.CONTACT_REMOVED, id};
+    },
+    editContact(contact){
+        return {type: constants.CONTACT_EDITED, contact};
     }
 };
 module.exports = actions;

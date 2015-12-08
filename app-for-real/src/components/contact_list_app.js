@@ -31,6 +31,9 @@ const NewApp = React.createClass({
         this.props.contactRemoved(id);
         this.props.history.pushState(null, '/contacts/');
     },
+    saveContact(contact){
+        this.props.saveContact(id);
+    },
     getContactByName(name){
         console.log("contacts", this.props);
         return this.props.contacts.contacts.filter((contact)=>contact.name === name)[0];
@@ -54,14 +57,14 @@ const NewApp = React.createClass({
         }
         let profilePage;
         if (this.props.params.name) {
-            profilePage = <ContactProfilePage onRemoveContact={this.removeContact}
+            profilePage = <ContactProfilePage onSaveContact={this.saveContact} onRemoveContact={this.removeContact}
                                               contact={this.getContactByName(this.props.params.name)}/>
         }
         return (
             <div>
                 {addContactElement}
                 <ContactList contacts={contacts} onContactAdded={this.contactAdded}/>
-                {profilePage}
+                {this.props.children}
             </div>
         );
     }

@@ -22,8 +22,7 @@ const ContactEntry = React.createClass({
         this.setState({editing: false});
     },
     render(){
-        console.log("Rendering entry", this);
-        var contact = this.props.contact;
+        const contact = this.props.contact;
 
         if (this.state.editing) {
             var element = <ContactEntryInput onSubmit={(text)=>this.handleSave(contact.id, text)}

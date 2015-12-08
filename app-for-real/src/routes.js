@@ -33,7 +33,7 @@ const routes = (
     <Route path="/" component={Wrapper}>
         <IndexRoute component={Home}/>
         <Route path="/contacts" component={NewAppCont}>
-            <Route path="/contacts/:name" component={NewAppCont}/>
+            <Route path="/contacts/:name" component={ContactProfilePage}/>
         </Route>
     </Route>
 );
