@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import libphonenumber from "libphonenumber-node";
 
 const ContactProfile = React.createClass({
     getInitialState(){
@@ -19,9 +20,19 @@ const ContactProfile = React.createClass({
             age: this.refs.age.value.trim(),
             phonenumber: this.refs.phonenumber.value.trim()
         };
-        this.props.onSubmit(contact);
-        _.map(this.refs, (input)=>input.value = '');
-        this.setState({editing: false});
+        if (contact.name && contact.phonenumber) {
+            // Let's use Google's libphonenumber to validate the phone number!
+            contact.phonenumber = libphonenumber.format(contact.phonenumber, "SE");
+            if (libphonenumber.isValid(contact.phonenumber)) {
+                this.props.onSubmit(contact);
+                _.map(this.refs, (input)=>input.value = '');
+                this.setState({editing: false});
+            } else {
+                alert("Invalid phone number!");
+            }
+        } else {
+            alert("Please input correct info!");
+        }
     },
     render(){
         const c = this.props.contact;
@@ -34,7 +45,7 @@ const ContactProfile = React.createClass({
                     </div>
                     <div>Name: <input type="text" ref="name" defaultValue={c.name}/></div>
                     <div>Age: <input type="number" ref="age" defaultValue={c.age}/></div>
-                    <div>Phonenumber: <input type="text" ref="phonenumber" defaultValue={c.phonenumber}/></div>
+                    <div>Phonenumber: <input type="text" ref="phonenumber" defaultValue={libphonenumber.format(c.phonenumber, "local")}/></div>
                     <button onClick={this.handleSubmit}>Save this contact</button>
                     <button onClick={this.props.onRemoveContact.bind(null, c.id)}>Remove this contact
                     </button>
@@ -48,7 +59,7 @@ const ContactProfile = React.createClass({
                 </div>
                 <div>Name: <label>{c.name}</label></div>
                 <div>Age: <label>{c.age}</label></div>
-                <div>Phonenumber: <label>{c.phonenumber}</label></div>
+                <div>Phonenumber: <label>{libphonenumber.format(c.phonenumber, "local")}</label></div>
                 <button onClick={this.beginEdit}>Edit this contact</button>
                 <button onClick={this.props.onRemoveContact.bind(null, c.id)}>Remove this contact
                 </button>
