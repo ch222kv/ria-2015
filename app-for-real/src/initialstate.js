@@ -10,7 +10,7 @@ const initialstate = ()=> {
     return {
         contacts: {
             contacts: [
-                {id: 1, name: "Christoffer Holmgren", phonenumber: "073 823 44 60", age: 21, editing: false}
+                {id: 1, name: "Christoffer Holmgren", phonenumber: "+46738234460", age: 21, editing: false}
             ],
             addingContact: false,
             currentMaxId: 2,

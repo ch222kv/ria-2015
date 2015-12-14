@@ -5,6 +5,7 @@
 import React from "react";
 import {Link} from "react-router";
 import _ from "lodash";
+import libphonenumber from "libphonenumber-node";
 
 const ContactEntry = React.createClass({
     render(){
@@ -35,8 +36,18 @@ const ContactEntryInput = React.createClass({
         values.map((ref)=>{
             contact[ref] = this.refs[ref].value.trim();
         });
-        this.props.onSubmit(contact);
-        _.map(this.refs, (input)=>input.value = '');
+        if (contact.name && contact.phonenumber) {
+        	// Let's use Google's libphonenumber to validate the phone number!
+        	contact.phonenumber = libphonenumber.format(contact.phonenumber, "SE");
+        	if (libphonenumber.isValid(contact.phonenumber)) {
+        		this.props.onSubmit(contact);
+        		_.map(this.refs, (input)=>input.value = '');
+        	} else {
+        		alert("Invalid phone number!");
+        	}
+    	} else {
+    		alert("Please input correct info!");
+    	}
     },
     render(){
         return (
