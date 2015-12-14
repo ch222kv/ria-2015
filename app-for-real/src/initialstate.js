@@ -8,9 +8,13 @@
 import C from "./constants";
 const initialstate = ()=> {
     return {
-        contacts: [
-            {id: 1, name: "Christoffer Holmgren", phonenumber: "073 823 44 60", age: 21}
-        ]
+        contacts: {
+            contacts: [
+                {id: 1, name: "Christoffer Holmgren", phonenumber: "073 823 44 60", age: 21, editing: false}
+            ],
+            addingContact: false,
+            currentMaxId: 2,
+        }
     }
 };
 

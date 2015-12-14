@@ -13,14 +13,6 @@ import new_store from "./store";
 import Wrapper from "./components/wrapper";
 import NewAppCont from "./components/contact_list_app";
 import ContactProfilePage from "./components/contact_profile_page";
-
-const Home = React.createClass({
-    render(){
-        return (
-            <Link to={'/contacts'}>Go to your contacts.</Link>
-        )
-    }
-});
 const EasyComponent = React.createClass({
     render(){
         return (
@@ -31,7 +23,6 @@ const EasyComponent = React.createClass({
 
 const routes = (
     <Route path="/" component={Wrapper}>
-        <IndexRoute component={Home}/>
         <Route path="/contacts" component={NewAppCont}>
             <Route path="/contacts/:name" component={ContactProfilePage}/>
         </Route>

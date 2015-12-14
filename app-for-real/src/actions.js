@@ -34,11 +34,25 @@ const actions = {
     addContact(contact){
         return {type: constants.CONTACT_ADDED, contact};
     },
+    saveContact(contact){
+        return {type: constants.CONTACT_SAVED, contact};
+    },
     removeContact(id){
         return {type: constants.CONTACT_REMOVED, id};
     },
+    beginEdit(id){
+        return {type: constants.CONTACT_BEGIN_EDIT, id}
+    },
     editContact(contact){
         return {type: constants.CONTACT_EDITED, contact};
+    },
+    endEdit(id){
+        return {type: constants.CONTACT_END_EDIT, id};
+    },
+    loadFromLocalStore(){
+        const storage = localStorage.getItem(constants.LOCALSTORAGE_KEY);
+        console.log("Loaded", storage);
+        return {type: constants.LOADED_FROM_LOCALSTORAGE, storage};
     }
 };
 module.exports = actions;

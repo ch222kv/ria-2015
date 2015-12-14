@@ -45,7 +45,8 @@ const NewApp = React.createClass({
         this.setState({addingContact: false});
     },
     render(){
-        const contacts = this.props.contacts.contacts;
+        console.log("Contact list app props: ", this.props);
+        const contacts = this.props.contacts.contacts.contacts;
         let addContactElement;
 
         if (this.state.addingContact) {
@@ -55,14 +56,11 @@ const NewApp = React.createClass({
         } else {
             addContactElement = <button onClick={this.beginAddContact}>Add contact</button>;
         }
-        let profilePage;
-        if (this.props.params.name) {
-            profilePage = <ContactProfilePage onSaveContact={this.saveContact} onRemoveContact={this.removeContact}
-                                              contact={this.getContactByName(this.props.params.name)}/>
-        }
         return (
             <div>
+                <div><h2>Adding contact</h2>
                 {addContactElement}
+                    </div>
                 <ContactList contacts={contacts} onContactAdded={this.contactAdded}/>
                 {this.props.children}
             </div>
@@ -71,6 +69,7 @@ const NewApp = React.createClass({
 });
 
 const stateToProp = (state) => {
+    console.log(state);
     return {
         contacts: state.contacts
     };

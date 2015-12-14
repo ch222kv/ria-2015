@@ -20,9 +20,7 @@ const ContactList = React.createClass({
         );
         return (
             <div>
-                <h1>Contact List</h1>
-                <Link to="#/test">Home</Link>
-                {this.props.stateish ? "yes" : "no"}
+                <h2>Contact List</h2>
                 <div>
                     {contactElements}
                 </div>

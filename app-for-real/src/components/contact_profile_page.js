@@ -17,20 +17,24 @@ const ContactProfilePage = React.createClass({
     getContactByName(name){
         console.log(name);
         console.log(this.props);
-        const contact = this.props.contacts.contacts.filter((c)=>c.name == name)[0]
+        const contact = this.props.contacts.contacts.contacts.filter((c)=>c.name == name)[0]
         console.log(contact);
         return contact;
     },
+    handleRemoveContact(id){
+        this.props.contactRemoved(id);
+        this.props.history.pushState(null, "/contacts");
+    },
     render(){
-        const contact = this.getContactByName(this.props.params.name);
         console.log("Contact profile page", this.props);
+        const contact = this.getContactByName(this.props.params.name);
         if (contact) {
             return (
                 <div className={contact === undefined ? "profile-page hidden" : "profile-page"}>
                     <h1>{contact.name}</h1>
                     <Link to={'/contacts'} className="close-button">X</Link>
-                    <ContactProfile contact={contact} onRemoveContact={this.props.contactRemoved}
-                                    onSubmit={this.props.contactAdded}/>
+                    <ContactProfile contact={contact} onRemoveContact={this.handleRemoveContact}
+                                    onSubmit={this.props.contactSaved} beginEdit={this.props.contactBeginEdit}/>
                 </div>
             );
         } else {
@@ -53,6 +57,8 @@ const dispatchToProps = (dispatch) => {
     return {
         contactAdded: (name) => dispatch(actions.addContact(name)),
         contactRemoved: (id) => dispatch(actions.removeContact(id)),
+        contactBeginEdit: (id) => dispatch(actions.beginEdit(id)),
+        contactSaved: contact => dispatch(actions.saveContact(contact))
     };
 };
 

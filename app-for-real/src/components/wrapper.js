@@ -4,12 +4,18 @@
  */
 
 import React from "react";
+import {Link} from "react-router";
 
 var Wrapper = React.createClass({
     render: function () {
         return (
             <div className="wrapper">
-                <h2>Towes kontaktlista!</h2>
+                <h1>The Contact list</h1>
+                <ul>
+                    <li><Link to="/">Home</Link>
+                    </li>
+                    <li><Link to={'/contacts'}>Go to your contacts.</Link></li>
+                </ul>
 
                 {this.props.children}
             </div>

@@ -15,6 +15,7 @@ import new_store from "./store";
 import Wrapper from "./components/wrapper";
 import NewAppCont from "./components/contact_list_app";
 import routes from "./routes";
+import actions from "./actions";
 
 /*
  * Let's create a store.
@@ -25,3 +26,5 @@ ReactDOM.render((
         <Router routes={routes} />
     </Provider>
 ), document.getElementById("root"));
+
+new_store.dispatch(actions.loadFromLocalStore());
