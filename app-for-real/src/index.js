@@ -17,6 +17,10 @@ import NewAppCont from "./components/contact_list_app";
 import routes from "./routes";
 import actions from "./actions";
 
+import initialstate from "./initialstate";
+
+console.log(initialstate());
+
 /*
  * Let's create a store.
  */

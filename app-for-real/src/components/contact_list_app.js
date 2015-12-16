@@ -36,7 +36,7 @@ const NewApp = React.createClass({
     },
     getContactByName(name){
         console.log("contacts", this.props);
-        return this.props.contacts.contacts.filter((contact)=>contact.name === name)[0];
+        return this.props.contacts.filter((contact)=>contact.name === name)[0];
     },
     beginAddContact(){
         this.setState({addingContact: true});
@@ -46,7 +46,7 @@ const NewApp = React.createClass({
     },
     render(){
         console.log("Contact list app props: ", this.props);
-        const contacts = this.props.contacts.contacts.contacts;
+        const contacts = this.props.contacts.contacts;
         let addContactElement;
 
         if (this.state.addingContact) {

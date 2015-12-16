@@ -13,7 +13,10 @@ const initialstate = ()=> {
                 {id: 1, name: "Christoffer Holmgren", phonenumber: "+46738234460", age: 21, editing: false}
             ],
             addingContact: false,
-            currentMaxId: 2,
+            currentMaxId: 2
+        },
+        chat: {
+            log: []
         }
     }
 };

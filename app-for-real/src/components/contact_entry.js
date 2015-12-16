@@ -37,17 +37,17 @@ const ContactEntryInput = React.createClass({
             contact[ref] = this.refs[ref].value.trim();
         });
         if (contact.name && contact.phonenumber) {
-        	// Let's use Google's libphonenumber to validate the phone number!
-        	contact.phonenumber = libphonenumber.format(contact.phonenumber, "SE");
-        	if (libphonenumber.isValid(contact.phonenumber)) {
-        		this.props.onSubmit(contact);
-        		_.map(this.refs, (input)=>input.value = '');
-        	} else {
-        		alert("Invalid phone number!");
-        	}
-    	} else {
-    		alert("Please input correct info!");
-    	}
+            // Let's use Google's libphonenumber to validate the phone number!
+            contact.phonenumber = libphonenumber.format(contact.phonenumber, "SE");
+            if (libphonenumber.isValid(contact.phonenumber)) {
+                this.props.onSubmit(contact);
+                _.map(this.refs, (input)=>input.value = '');
+            } else {
+                alert("Invalid phone number!");
+            }
+        } else {
+            alert("Please input correct info!");
+        }
     },
     render(){
         return (

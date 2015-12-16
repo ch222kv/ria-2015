@@ -13,6 +13,8 @@ import new_store from "./store";
 import Wrapper from "./components/wrapper";
 import NewAppCont from "./components/contact_list_app";
 import ContactProfilePage from "./components/contact_profile_page";
+import EchoChat from "./components/echo_chat";
+
 const EasyComponent = React.createClass({
     render(){
         return (
@@ -23,8 +25,10 @@ const EasyComponent = React.createClass({
 
 const routes = (
     <Route path="/" component={Wrapper}>
-        <Route path="/contacts" component={NewAppCont}>
-            <Route path="/contacts/:name" component={ContactProfilePage}/>
+        <Route path="contacts" component={NewAppCont}>
+            <Route path=":name" component={ContactProfilePage}>
+                <Route path="chat" component={EchoChat}/>
+                </Route>
         </Route>
     </Route>
 );

@@ -53,6 +53,14 @@ const actions = {
         const storage = localStorage.getItem(constants.LOCALSTORAGE_KEY);
         console.log("Loaded", storage);
         return {type: constants.LOADED_FROM_LOCALSTORAGE, storage};
+    },
+    submitEchoChat(entry){
+        return function (dispatch, getState) {
+            dispatch({type: constants.CHAT_MESSAGE, entry});
+            setTimeout(()=> {
+                dispatch({type: constants.ECHO_CHAT_MESSAGE, entry});
+            }, Math.random() * 2000 + 500)
+        };
     }
 };
 module.exports = actions;

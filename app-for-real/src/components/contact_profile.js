@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import {Link} from "react-router";
 import libphonenumber from "libphonenumber-node";
 
 const ContactProfile = React.createClass({
@@ -52,18 +53,19 @@ const ContactProfile = React.createClass({
         }
         return (
             <div>
+                <div><Link to={"/contacts/" + c.name + "/chat"}>Chat with</Link></div>
                 <div>
                     <img style={{width: "200px", height: "200px", position: "relative"}}/>
                 </div>
                 <div>Name: <label>{c.name}</label></div>
                 <div>Age: <label>{c.age}</label></div>
-                    <div>Phonenumber: <label>{libphonenumber.format(c.phonenumber, "local")}</label></div>
-                    <button onClick={this.beginEdit}>Edit this contact</button>
-                    <button onClick={this.handleRemoveContact}>Remove this contact
-                    </button>
+                <div>Phonenumber: <label>{libphonenumber.format(c.phonenumber, "local")}</label></div>
+                <button onClick={this.beginEdit}>Edit this contact</button>
+                <button onClick={this.handleRemoveContact}>Remove this contact
+                </button>
             </div>
-    );
+        );
     }
-    });
-    export default ContactProfile;
-    module.exports = ContactProfile;
+});
+export default ContactProfile;
+module.exports = ContactProfile;

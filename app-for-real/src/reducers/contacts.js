@@ -45,7 +45,7 @@ const reducer = (state, action) => {
             if (action.storage !== null) {
                 return action.storage;
             }
-            return initialState();
+            return initialState().contacts;
         }
 
     };
@@ -54,7 +54,7 @@ const reducer = (state, action) => {
         const result = actions[action.type]();
         return result;
     } catch (TypeError) {
-        return initialState();
+        return initialState().contacts;
     }
 };
 module.exports = reducer;

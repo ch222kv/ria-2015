@@ -14,39 +14,47 @@ import _ from "lodash";
 import ReactRedux, { connect } from "react-redux";
 
 const ContactProfilePage = React.createClass({
-    getContactByName(name){
-        console.log(name);
-        console.log(this.props);
-        const contact = this.props.contacts.contacts.contacts.filter((c)=>c.name == name)[0]
-        console.log(contact);
-        return contact;
-    },
-    handleRemoveContact(id){
-        this.props.contactRemoved(id);
-        this.props.history.pushState(null, "/contacts");
-    },
-    render(){
-        console.log("Contact profile page", this.props);
-        const contact = this.getContactByName(this.props.params.name);
-        if (contact) {
-            return (
-                <div className={contact === undefined ? "profile-page hidden" : "profile-page"}>
-                    <h1>{contact.name}</h1>
-                    <Link to={'/contacts'} className="close-button">X</Link>
-                    <ContactProfile contact={contact} onRemoveContact={this.handleRemoveContact}
-                                    onSubmit={this.props.contactSaved} beginEdit={this.props.contactBeginEdit}/>
-                </div>
-            );
-        } else {
-            return (
-                <div className="profile-page">
-                    <h1>Contact doesn't exist</h1>
-                    <Link to={'/contacts'} className="close-button">X</Link>
-                </div>
-            );
+        getContactByName(name){
+            console.log(name);
+            console.log(this.props);
+            const contact = this.props.contacts.contacts.filter((c)=>c.name == name)[0]
+            console.log(contact);
+            return contact;
+        },
+        handleRemoveContact(id){
+            this.props.contactRemoved(id);
+            this.props.history.pushState(null, "/contacts");
+        },
+        render(){
+            console.log("Contact profile page", this.props);
+            const contact = this.getContactByName(this.props.params.name);
+            if (contact && !this.props.children) {
+                return (
+                    <div className={contact === undefined ? "profile-page hidden" : "profile-page"}>
+                        <h1>{contact.name}</h1>
+                        <Link to={'/contacts'} className="close-button">X</Link>
+                        <ContactProfile contact={contact} onRemoveContact={this.handleRemoveContact}
+                                        onSubmit={this.props.contactSaved} beginEdit={this.props.contactBeginEdit}/>
+                    </div>
+                );
+            }
+            if (this.props.children) {
+                return (
+                    <div className="profile-page">
+                        {this.props.children}
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="profile-page">
+                        <h1>Contact doesn't exist</h1>
+                        <Link to={'/contacts'} className="close-button">X</Link>
+                    </div>
+                );
+            }
         }
-    }
-});
+    })
+    ;
 
 const stateToProp = (state) => {
     return {

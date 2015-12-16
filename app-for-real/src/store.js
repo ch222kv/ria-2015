@@ -5,13 +5,14 @@
 
 import Redux, {combineReducers, applyMiddleware, createStore} from "redux";
 import contactsReducer from "./reducers/contacts";
+import chatReducer from "./reducers/chat";
 import initialState from "./initialstate";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
-    contacts: contactsReducer
+    contacts: contactsReducer,
+    chat: chatReducer
 });
 const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState());
 
-module.exports = store;
 export default store;
