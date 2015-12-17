@@ -5,6 +5,40 @@
 
 import constants from "./constants";
 
+const getSyllabels = function getSyllables(string) {
+    const vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
+    let syllables = [];
+    let currentWord = string;
+    let numVowels = 0;
+    let lastWasVowel = false;
+    let syllableString = "";
+    for (let wc of currentWord) {
+        let foundVowel = false;
+        syllableString += wc;
+        for (let v of vowels) {
+            //don't count diphthongs
+            if (v == wc && lastWasVowel) {
+                foundVowel = true;
+                lastWasVowel = true;
+                break;
+            }
+            else if (v == wc && !lastWasVowel) {
+                syllables.push(syllableString);
+                numVowels++;
+                syllableString = "";
+                foundVowel = true;
+                lastWasVowel = true;
+                break;
+            }
+        }
+
+        //if full cycle and no vowel found
+        if (!foundVowel)
+            lastWasVowel = false;
+    }
+
+    return syllables;
+};
 
 const actions = {
     reset: function () {
@@ -56,10 +90,32 @@ const actions = {
     },
     submitEchoChat(entry){
         return function (dispatch, getState) {
+            let syllables = getSyllabels(entry.message);
+
             dispatch({type: constants.CHAT_MESSAGE, entry});
-            setTimeout(()=> {
-                dispatch({type: constants.ECHO_CHAT_MESSAGE, entry});
-            }, Math.random() * 2000 + 500)
+            let syllablesLeft = syllables;
+            let time = 1000;
+            // To prevent the looping instantly overwriting a lot of echos and a large amount of setTimeouts
+            let loop = () => {
+                setTimeout(()=> {
+                        if (syllablesLeft.length > 0) {
+                            let length = syllablesLeft.length - 1;
+                            if (length > 7 && Math.random() >= 0.5) {
+                                length -= 1;
+                            }
+                            dispatch({
+                                type: constants.ECHO_CHAT_MESSAGE,
+                                entry: Object.assign({}, entry, {message: syllablesLeft.reduce((a, b) => a + b, "")})
+                            });
+                            syllablesLeft = syllablesLeft.slice(0, length);
+                            time = Math.random() * 1000 + (750 - syllablesLeft.length * 35);
+                            loop();
+                        }
+                    },
+                    time);
+            };
+            loop();
+
         };
     }
 };

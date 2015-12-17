@@ -11,7 +11,8 @@ import {Link} from "react-router";
 const EchoChat = React.createClass({
     submitEntry(){
         console.log(this);
-        this.props.submitEntry({user: this.props.params.name, message: this.refs.chattext.value});
+        this.props.submitEntry({user: this.props.chat.currentChatName, message: this.refs.chattext.value});
+        this.refs.chattext.value = "";
     },
     render(){
         return (<div>

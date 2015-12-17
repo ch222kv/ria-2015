@@ -28,30 +28,26 @@ const ContactProfilePage = React.createClass({
         render(){
             console.log("Contact profile page", this.props);
             const contact = this.getContactByName(this.props.params.name);
+            let contents;
+
             if (contact && !this.props.children) {
-                return (
-                    <div className={contact === undefined ? "profile-page hidden" : "profile-page"}>
+                contents = (
+                    <div>
                         <h1>{contact.name}</h1>
-                        <Link to={'/contacts'} className="close-button">X</Link>
                         <ContactProfile contact={contact} onRemoveContact={this.handleRemoveContact}
                                         onSubmit={this.props.contactSaved} beginEdit={this.props.contactBeginEdit}/>
-                    </div>
-                );
-            }
-            if (this.props.children) {
-                return (
-                    <div className="profile-page">
-                        {this.props.children}
-                    </div>
-                )
+                    </div>);
+            } else if (this.props.children) {
+                contents = <div>{this.props.children}</div>;
             } else {
-                return (
-                    <div className="profile-page">
-                        <h1>Contact doesn't exist</h1>
-                        <Link to={'/contacts'} className="close-button">X</Link>
-                    </div>
-                );
+                contents = <div><h1>Contact doesn't exist</h1></div>;
             }
+            return (
+                <div className={contact === undefined ? "profile-page hidden" : "profile-page"}>
+                    {contents}
+                    <Link to={'/contacts'} className="close-button">X</Link>
+                </div>
+            )
         }
     })
     ;

@@ -6,7 +6,6 @@ import _ from "lodash";
 
 const ChatLog = React.createClass({
     render(){
-        console.log(this.props.chat);
         const entries = this.props.chat.log.map((entry)=><div key={Math.random() * 1000000}>
             <span>{entry.user}</span> <span>
             |</span> <span>{entry.message}</span></div>)

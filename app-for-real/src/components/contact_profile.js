@@ -53,7 +53,7 @@ const ContactProfile = React.createClass({
         }
         return (
             <div>
-                <div><Link to={"/contacts/" + c.name + "/chat"}>Chat with</Link></div>
+                <div><Link to={"/contacts/" + c.name + "/chat"}>Chat "with" {c.name}</Link></div>
                 <div>
                     <img style={{width: "200px", height: "200px", position: "relative"}}/>
                 </div>

@@ -16,7 +16,8 @@ const initialstate = ()=> {
             currentMaxId: 2
         },
         chat: {
-            log: []
+            log: [],
+            currentChatName: null
         }
     }
 };

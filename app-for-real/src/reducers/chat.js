@@ -9,7 +9,6 @@ const reducer = (state, action)=> {
         case C.CHAT_MESSAGE:
             newstate.log.push(action.entry);
             return newstate;
-
         case C.ECHO_CHAT_MESSAGE:
             newstate.log.push(Object.assign({}, action.entry, {user: "echo"}));
             return newstate;
