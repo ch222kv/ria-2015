@@ -5,40 +5,8 @@
 
 import constants from "./constants";
 
-const getSyllabels = function getSyllables(string) {
-    const vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
-    let syllables = [];
-    let currentWord = string;
-    let numVowels = 0;
-    let lastWasVowel = false;
-    let syllableString = "";
-    for (let wc of currentWord) {
-        let foundVowel = false;
-        syllableString += wc;
-        for (let v of vowels) {
-            //don't count diphthongs
-            if (v == wc && lastWasVowel) {
-                foundVowel = true;
-                lastWasVowel = true;
-                break;
-            }
-            else if (v == wc && !lastWasVowel) {
-                syllables.push(syllableString);
-                numVowels++;
-                syllableString = "";
-                foundVowel = true;
-                lastWasVowel = true;
-                break;
-            }
-        }
-
-        //if full cycle and no vowel found
-        if (!foundVowel)
-            lastWasVowel = false;
-    }
-
-    return syllables;
-};
+import Fuse from "fuse.js";
+import {getSyllabels} from "./helpers";
 
 const actions = {
     reset: function () {
@@ -89,34 +57,70 @@ const actions = {
         return {type: constants.LOADED_FROM_LOCALSTORAGE, storage};
     },
     submitEchoChat(entry){
+        const options = {
+            caseSensitive: false,
+            includeScore: false,
+            shouldSort: true,
+            threshold: 0.4,
+            location: 0,
+            distance: 50,
+            maxPatternLength: 32,
+            keys: ["entry"]
+        };
+        const messages = [{
+            entry: "why are you copying me?",
+            response: "I'm not!"
+        }];
+        const fuse = new Fuse(messages, options);
+        const result = fuse.search(entry.message);
+        const syllables = getSyllabels(entry.message);
+
         return function (dispatch, getState) {
-            let syllables = getSyllabels(entry.message);
 
             dispatch({type: constants.CHAT_MESSAGE, entry});
-            let syllablesLeft = syllables;
-            let time = 1000;
-            // To prevent the looping instantly overwriting a lot of echos and a large amount of setTimeouts
-            let loop = () => {
-                setTimeout(()=> {
-                        if (syllablesLeft.length > 0) {
-                            let length = syllablesLeft.length - 1;
-                            if (length > 7 && Math.random() >= 0.5) {
-                                length -= 1;
+            if (result.length) {
+                const chosenResult = _.sample(result);
+
+                setTimeout(() => dispatch({
+                    type: constants.ECHO_CHAT_MESSAGE,
+                    entry: Object.assign({}, entry, {message: chosenResult.response})
+                }), 750);
+            } else {
+                let syllablesLeft = syllables;
+                let time = 1000;
+                // To prevent the looping instantly overwriting a lot of echos and a large amount of setTimeouts
+                const loop = (syllablesToCheck) => {
+                    setTimeout(()=> {
+                            if (syllablesToCheck.length > 0) {
+                                let length = syllablesToCheck.length - 1;
+                                //Arbitrary length check
+                                //If the number of syllables is larger than [arbitrary number]
+                                // and also we rolled a number over 0.5 remove and extra from length
+                                if (length > 7 && Math.random() >= 0.5) {
+                                    length -= 1;
+                                }
+                                dispatch({
+                                    type: constants.ECHO_CHAT_MESSAGE,
+                                    entry: Object.assign({}, entry, {message: syllablesToCheck.reduce((a, b) => a + b, "") + "..."})
+                                });
+                                //Yay for more arbitrary messages
+                                time = Math.random() * 1000 + (750 - syllablesToCheck.length * 35);
+                                loop(syllablesToCheck.slice(0, length));
                             }
-                            dispatch({
-                                type: constants.ECHO_CHAT_MESSAGE,
-                                entry: Object.assign({}, entry, {message: syllablesLeft.reduce((a, b) => a + b, "")})
-                            });
-                            syllablesLeft = syllablesLeft.slice(0, length);
-                            time = Math.random() * 1000 + (750 - syllablesLeft.length * 35);
-                            loop();
-                        }
-                    },
-                    time);
-            };
-            loop();
+                        },
+                        time);
+                };
+                setTimeout(()=> {
+                    dispatch({type: constants.ECHO_CHAT_MESSAGE, entry});
+                    loop(syllablesLeft);
+                }, 1000);
+
+            }
 
         };
+    },
+    changeCurrentChatName(name){
+        return {type: constants.SET_CHAT_NAME, name};
     }
 };
 module.exports = actions;

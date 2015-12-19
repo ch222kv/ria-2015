@@ -12,6 +12,8 @@ const reducer = (state, action)=> {
         case C.ECHO_CHAT_MESSAGE:
             newstate.log.push(Object.assign({}, action.entry, {user: "echo"}));
             return newstate;
+        case C.SET_CHAT_NAME:
+            return Object.assign(newstate, {currentChatName: action.name});
         default:
             return initialState().chat;
     }
