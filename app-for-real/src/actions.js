@@ -74,6 +74,7 @@ const actions = {
         const fuse = new Fuse(messages, options);
         const result = fuse.search(entry.message);
         const syllables = getSyllabels(entry.message);
+        // Don't eat poop
 
         return function (dispatch, getState) {
 
