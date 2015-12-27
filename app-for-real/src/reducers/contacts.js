@@ -4,58 +4,33 @@
 
 import C from "../constants";
 import initialState from "../initialstate";
-const reducer = (state, action) => {
-    let newstate = Object.assign({}, state);
-    let key;
-    console.log(state, action);
-    const findContactById = (id) => _.findKey(newstate.contacts.contacts, contact => contact.id == id);
+import ReduxLocalstorage from "redux-simple-localstorage"
+const {read,write} = ReduxLocalstorage("myKey");
 
-    const actions = {
-        [C.CONTACT_ADDED]: () => {
-            console.log(action.contact, newstate);
+const reducer = (state, action) => {
+    const newstate = Object.assign({}, state);
+    let key;
+    const findContactById = (id) => _.findKey(newstate.contacts, contact => contact.id == id);
+    switch (action.type) {
+        case C.CONTACT_ADDED:
             action.contact.id = newstate.contacts.currentMaxId++;
-            newstate.contacts.contacts.push(action.contact);
+            newstate.contacts.push(action.contact);
             return newstate;
-        },
-        [C.CONTACT_SAVED]: () => {
+        case C.CONTACT_SAVED:
             key = findContactById(action.contact.id);
             action.contact.editing = false;
-            newstate.contacts.contacts[key] = action.contact;
+            newstate.contacts[key] = action.contact;
             return newstate;
-        },
-        [C.CONTACT_REMOVED]: ()=> {
-            const index = newstate.contacts.contacts.findIndex((element)=>element.id === action.id);
-            newstate.contacts.contacts.splice(index, 1);
-            return newstate;
-        },
-        [C.CONTACT_BEGIN_EDIT]: ()=> {
+        case C.CONTACT_REMOVED:
             key = findContactById(action.id);
-            console.log(key);
-            newstate.contacts.contacts[key].editing = true;
+            newstate.contacts.splice(key, 1);
             return newstate;
-        },
-        [C.CONTACT_END_EDIT]: ()=> {
-            key = _.findKey(newstate.contacts.contacts, (contact=> {
-                return contact.id == action.id;
-            }));
-            newstate.contactscontacts[key].editing = false;
-            return newstate;
-        },
-        [C.LOADED_FROM_LOCALSTORAGE]: ()=> {
-            if (action.storage !== null) {
-                return action.storage;
-            }
-            return initialState().contacts;
-        }
-
-    };
-    console.log(actions, action);
-    try {
-        const result = actions[action.type]();
-        return result;
-    } catch (TypeError) {
-        return initialState().contacts;
+        case C.CONTACT_BEGIN_ADD:
+            return Object.assign({}, state, {addingContact: true});
+        case C.CONTACT_END_ADD:
+            return Object.assign({}, state, {addingContact: false});
+        default:
+            return read().contacts || initialState().contacts;
     }
 };
-module.exports = reducer;
 export default reducer;

@@ -14,43 +14,26 @@ import _ from "lodash";
 import ReactRedux, { connect } from "react-redux";
 
 const ContactProfilePage = React.createClass({
-        getContactByName(name){
-            console.log(name);
-            console.log(this.props);
-            const contact = this.props.contacts.contacts.filter((c)=>c.name == name)[0]
-            console.log(contact);
-            return contact;
-        },
-        handleRemoveContact(id){
-            this.props.contactRemoved(id);
-            this.props.history.pushState(null, "/contacts");
-        },
-        render(){
-            console.log("Contact profile page", this.props);
-            const contact = this.getContactByName(this.props.params.name);
-            let contents;
+    getContactByName(name){
+        return this.props.contacts.contacts.filter((c)=>c.name == name)[0];
+    },
+    handleRemoveContact(id){
+        this.props.contactRemoved(id);
+        this.props.history.pushState(null, "/contacts");
+    },
+    render(){
+        const contact = this.getContactByName(this.props.params.name) || {name: ""};
+        console.log(this.props);
 
-            if (contact && !this.props.children) {
-                contents = (
-                    <div>
-                        <h1>{contact.name}</h1>
-                        <ContactProfile contact={contact} onRemoveContact={this.handleRemoveContact}
-                                        onSubmit={this.props.contactSaved} beginEdit={this.props.contactBeginEdit}/>
-                    </div>);
-            } else if (this.props.children) {
-                contents = <div>{this.props.children}</div>;
-            } else {
-                contents = <div><h1>Contact doesn't exist</h1></div>;
-            }
-            return (
-                <div className={contact === undefined ? "profile-page hidden" : "profile-page"}>
-                    {contents}
-                    <Link to={'/contacts'} className="close-button">X</Link>
-                </div>
-            )
-        }
-    })
-    ;
+        return (
+            <div className={contact === undefined ? "profile-page hidden" : "profile-page"}>
+                <h1>{contact.name || "Contact doesn't exist"}</h1>
+                {contact.name ? this.props.children : ''}
+                <Link to={'/contacts'} className="close-button">X</Link>
+            </div>
+        )
+    }
+});
 
 const stateToProp = (state) => {
     return {
@@ -68,4 +51,3 @@ const dispatchToProps = (dispatch) => {
 
 const ContactProfilePageCont = connect(stateToProp, dispatchToProps)(ContactProfilePage);
 export default ContactProfilePageCont;
-module.exports = ContactProfilePageCont;

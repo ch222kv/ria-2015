@@ -17,10 +17,14 @@ const initialstate = ()=> {
         },
         chat: {
             log: [],
-            currentChatName: null
+            currentChatName: null,
+            messages: [{
+                entry: "why are you copying me?",
+                response: "I'm not!"
+            }],
+            messagesError: null
         }
     }
 };
 
 export default initialstate;
-module.exports = initialstate;

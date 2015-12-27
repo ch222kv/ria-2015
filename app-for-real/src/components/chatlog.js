@@ -10,7 +10,7 @@ const ChatLog = React.createClass({
             <span>{entry.user}</span> <span>
             |</span> <span>{entry.message}</span></div>)
         return (
-            <div>
+            <div style={this.props.style}>
                 {entries}
             </div>);
     }

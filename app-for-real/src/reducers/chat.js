@@ -3,6 +3,9 @@
  */
 import C from "../constants";
 import initialState from "../initialstate";
+import ReduxLocalstorage from "redux-simple-localstorage"
+const {read,write} = ReduxLocalstorage("myKey");
+
 const reducer = (state, action)=> {
     let newstate = Object.assign({}, state);
     switch (action.type) {
@@ -14,8 +17,12 @@ const reducer = (state, action)=> {
             return newstate;
         case C.SET_CHAT_NAME:
             return Object.assign(newstate, {currentChatName: action.name});
+        case C.SAVE_MESSAGES:
+            return Object.assign(newstate, {messages: action.messages, messagesError: null});
+        case C.MESSAGES_NOT_FORMATTED_CORRECTLY:
+            return Object.assign(newstate, {messagesError: "Incorrectly formatted messages!"});
         default:
-            return initialState().chat;
+            return read().chat || initialState().chat;
     }
 };
 

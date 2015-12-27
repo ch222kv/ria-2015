@@ -11,24 +11,19 @@ import Redux, {createStore} from "redux";
 import thunk from "redux-thunk";
 import ReactRedux, {Provider} from "react-redux";
 
-import new_store from "./store";
+import store from "./store";
 import Wrapper from "./components/wrapper";
 import NewAppCont from "./components/contact_list_app";
 import routes from "./routes";
 import actions from "./actions";
 
-import initialstate from "./initialstate";
-
-console.log(initialstate());
 
 /*
  * Let's create a store.
  */
 
 ReactDOM.render((
-    <Provider store={new_store}>
+    <Provider store={store}>
         <Router routes={routes} />
     </Provider>
 ), document.getElementById("root"));
-
-new_store.dispatch(actions.loadFromLocalStore());

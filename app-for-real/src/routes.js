@@ -13,25 +13,25 @@ import new_store from "./store";
 import Wrapper from "./components/wrapper";
 import NewAppCont from "./components/contact_list_app";
 import ContactProfilePage from "./components/contact_profile_page";
+import ContactProfile from "./components/contact_profile";
 import EchoChat from "./components/echo_chat";
-
-const EasyComponent = React.createClass({
-    render(){
-        return (
-            <h2>Easy Component{this.props.params.id}</h2>
-        );
-    }
-});
+import EditContact from "./components/edit_contact";
+import ChatSettings from "./components/chat_settings";
+import Chat from "./components/chat";
 
 const routes = (
     <Route path="/" component={Wrapper}>
         <Route path="contacts" component={NewAppCont}>
             <Route path=":name" component={ContactProfilePage}>
-                <Route path="chat" component={EchoChat}/>
+                <IndexRoute component={ContactProfile}/>
+                <Route path="edit" component={EditContact}/>
+                <Route path="chat" component={EchoChat}>
+                    <IndexRoute component={Chat}/>
+                    <Route path="settings" component={ChatSettings}/>
                 </Route>
+            </Route>
         </Route>
     </Route>
 );
 
-module.exports = routes;
 export default routes;

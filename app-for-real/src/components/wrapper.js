@@ -22,6 +22,4 @@ var Wrapper = React.createClass({
         );
     }
 });
-
-module.exports = Wrapper;
 export default Wrapper;

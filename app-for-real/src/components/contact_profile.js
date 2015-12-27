@@ -3,54 +3,20 @@
  */
 
 import React from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router";
 import libphonenumber from "libphonenumber-node";
 
 const ContactProfile = React.createClass({
-    beginEdit(id){
-        this.props.beginEdit(id);
-    },
-    handleSubmit(e){
-        const contact = {
-            name: this.refs.name.value.trim(),
-            age: this.refs.age.value.trim(),
-            phonenumber: this.refs.phonenumber.value.trim(),
-            id: this.props.contact.id
-        };
-        if (contact.name && contact.phonenumber) {
-            // Let's use Google's libphonenumber to validate the phone number!
-            contact.phonenumber = libphonenumber.format(contact.phonenumber, "SE");
-            if (libphonenumber.isValid(contact.phonenumber)) {
-                this.props.onSubmit(contact);
-                _.map(this.refs, (input)=>input.value = '');
-                this.setState({editing: false});
-            } else {
-                alert("Invalid phone number!");
-            }
-        } else {
-            alert("Please input correct info!");
-        }
+    getContact(){
+        const contact = this.props.contacts.contacts.filter((c)=>c.name == this.props.params.name)[0];
+        return contact;
     },
     handleRemoveContact(){
-        this.props.onRemoveContact(this.props.contact.id);
+        this.props.contactRemoved(this.getContact().id);
     },
     render(){
-        const c = this.props.contact;
-        console.log("Contact", c);
-        if (c.editing) {
-            return (
-                <div>
-                    <div>
-                        <img style={{width: "200px", height: "200px", position: "relative"}}/>
-                    </div>
-                    <div>Name: <input type="text" ref="name" defaultValue={c.name}/></div>
-                    <div>Age: <input type="number" ref="age" defaultValue={c.age}/></div>
-                    <div>Phonenumber: <input type="text" ref="phonenumber"
-                                             defaultValue={libphonenumber.format(c.phonenumber, "local")}/></div>
-                    <button onClick={this.handleSubmit}>Save this contact</button>
-                </div>
-            );
-        }
+        const c = this.getContact();
         return (
             <div>
                 <div><Link to={"/contacts/" + c.name + "/chat"}>Chat "with" {c.name}</Link></div>
@@ -60,12 +26,22 @@ const ContactProfile = React.createClass({
                 <div>Name: <label>{c.name}</label></div>
                 <div>Age: <label>{c.age}</label></div>
                 <div>Phonenumber: <label>{libphonenumber.format(c.phonenumber, "local")}</label></div>
-                <button onClick={this.beginEdit}>Edit this contact</button>
+                <Link to={"/contacts/" + c.name + "/edit"}>Edit this contact</Link>
                 <button onClick={this.handleRemoveContact}>Remove this contact
                 </button>
             </div>
         );
     }
 });
-export default ContactProfile;
-module.exports = ContactProfile;
+
+const stateToProp = (state) => {
+    return {
+        contacts: state.contacts
+    };
+};
+const dispatchToProps = (dispatch) => {
+    return {
+        contactRemoved: (id) => dispatch(actions.removeContact(id)),
+    };
+};
+export default connect(stateToProp, dispatchToProps)(ContactProfile);

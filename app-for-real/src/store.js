@@ -8,11 +8,14 @@ import contactsReducer from "./reducers/contacts";
 import chatReducer from "./reducers/chat";
 import initialState from "./initialstate";
 import thunk from "redux-thunk";
+import ReduxLocalstorage from "redux-simple-localstorage"
+const {read,write} = ReduxLocalstorage("myKey");
 
 const rootReducer = combineReducers({
     contacts: contactsReducer,
     chat: chatReducer
 });
-const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState());
+
+const store = applyMiddleware(write, thunk)(createStore)(rootReducer, read() || initialState());
 
 export default store;

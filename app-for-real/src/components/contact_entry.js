@@ -63,11 +63,7 @@ const ContactEntryInput = React.createClass({
         );
     }
 });
-module.exports = {
-    ContactEntry,
-    ContactEntryInput
-};
-export default {
+export {
     ContactEntry,
     ContactEntryInput
 };

@@ -30,4 +30,3 @@ const ContactList = React.createClass({
     }
 });
 export default ContactList;
-module.exports = ContactList;
