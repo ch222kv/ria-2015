@@ -25771,7 +25771,7 @@
 	        case _constants2.default.CONTACT_END_ADD:
 	            return Object.assign({}, state, { addingContact: false });
 	        default:
-	            return read() && read().contacts || (0, _initialstate2.default)().contacts;
+				return read() && read().contacts || (0, _initialstate2.default)().contacts;
 	    }
 	};
 	exports.default = reducer;
@@ -25923,7 +25923,7 @@
 	        case _constants2.default.MESSAGES_NOT_FORMATTED_CORRECTLY:
 	            return Object.assign(newstate, { messagesError: "Incorrectly formatted messages!" });
 	        default:
-	            return read() && read().chat || (0, _initialstate2.default)().chat;
+				return read() && read().chat || (0, _initialstate2.default)().chat;
 	    }
 	};
 	
