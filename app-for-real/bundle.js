@@ -25771,7 +25771,7 @@
 	        case _constants2.default.CONTACT_END_ADD:
 	            return Object.assign({}, state, { addingContact: false });
 	        default:
-				return read() && read().contacts || (0, _initialstate2.default)().contacts;
+	            return read() && read().contacts || (0, _initialstate2.default)().contacts;
 	    }
 	};
 	exports.default = reducer;
@@ -25923,7 +25923,7 @@
 	        case _constants2.default.MESSAGES_NOT_FORMATTED_CORRECTLY:
 	            return Object.assign(newstate, { messagesError: "Incorrectly formatted messages!" });
 	        default:
-				return read() && read().chat || (0, _initialstate2.default)().chat;
+	            return read() && read().chat || (0, _initialstate2.default)().chat;
 	    }
 	};
 	
@@ -40474,10 +40474,6 @@
 	        return this.props.contacts.contacts.filter(function (c) {
 	            return c.name == name;
 	        })[0];
-	    },
-	    handleRemoveContact: function handleRemoveContact(id) {
-	        this.props.contactRemoved(id);
-	        this.props.history.pushState(null, "/contacts");
 	    },
 	    render: function render() {
 	        var contact = this.getContactByName(this.props.params.name) || { name: "" };

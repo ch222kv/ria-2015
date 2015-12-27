@@ -11,7 +11,7 @@ import ReactRedux, {Provider} from "react-redux";
 
 import new_store from "./store";
 import Wrapper from "./components/wrapper";
-import NewAppCont from "./components/contact_list_app";
+import ContactListApp from "./components/contact_list_app";
 import ContactProfilePage from "./components/contact_profile_page";
 import ContactProfile from "./components/contact_profile";
 import EchoChat from "./components/echo_chat";
@@ -21,7 +21,7 @@ import Chat from "./components/chat";
 
 const routes = (
     <Route path="/" component={Wrapper}>
-        <Route path="contacts" component={NewAppCont}>
+        <Route path="contacts" component={ContactListApp}>
             <Route path=":name" component={ContactProfilePage}>
                 <IndexRoute component={ContactProfile}/>
                 <Route path="edit" component={EditContact}/>

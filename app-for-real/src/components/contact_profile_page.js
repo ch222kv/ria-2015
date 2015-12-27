@@ -17,10 +17,6 @@ const ContactProfilePage = React.createClass({
     getContactByName(name){
         return this.props.contacts.contacts.filter((c)=>c.name == name)[0];
     },
-    handleRemoveContact(id){
-        this.props.contactRemoved(id);
-        this.props.history.pushState(null, "/contacts");
-    },
     render(){
         const contact = this.getContactByName(this.props.params.name) || {name: ""};
         console.log(this.props);
