@@ -30,7 +30,7 @@ const reducer = (state, action) => {
         case C.CONTACT_END_ADD:
             return Object.assign({}, state, {addingContact: false});
         default:
-            return read().contacts || initialState().contacts;
+            return (read() && read().contacts) || initialState().contacts;
     }
 };
 export default reducer;

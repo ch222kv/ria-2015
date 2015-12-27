@@ -22,7 +22,7 @@ const reducer = (state, action)=> {
         case C.MESSAGES_NOT_FORMATTED_CORRECTLY:
             return Object.assign(newstate, {messagesError: "Incorrectly formatted messages!"});
         default:
-            return read().chat || initialState().chat;
+            return (read() && read().chat) || initialState().chat;
     }
 };
 
