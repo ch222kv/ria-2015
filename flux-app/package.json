@@ -1,0 +1,33 @@
+{
+  "devDependencies": {
+    "babel": "^6.1.18",
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babelify": "^7.2.0",
+    "browserify": "=12.0.1",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.0",
+    "libphonenumber-node": "0.0.3",
+    "lodash": "=3.10.1",
+    "orchestrator": "^0.3.7",
+    "react": "^0.14.0",
+    "react-dom": "=0.14.0",
+    "react-hot-loader": "^1.3.0",
+    "react-router": "=1.0.0-rc3",
+    "reactify": "=1.1.1",
+    "watchify": "^3.6.1",
+    "webpack": "^1.12.8"
+  },
+  "scripts": {
+    "build": "webpack",
+    "watch": "watchify -d -t [babelify --presets [ react es2015 ] ] src/index.js -o bundle.js -v",
+    "gulp": "gulp"
+  },
+  "dependencies": {
+    "events": "^1.1.0",
+    "flux": "^2.1.1",
+    "fuse.js": "^1.3.1"
+  }
+}
