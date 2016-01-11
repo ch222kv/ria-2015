@@ -29,7 +29,19 @@
     "gulp": "gulp"
   },
   "dependencies": {
+    "autoprefixer": "^6.2.3",
+    "classnames": "^2.2.3",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
     "fuse.js": "^1.3.1",
-    "redux-simple-localstorage": "^1.0.2"
+    "node-sass": "^3.4.2",
+    "normalize.css": "^3.0.3",
+    "path": "^0.12.7",
+    "react-addons-css-transition-group": "^0.14.6",
+    "react-hot-loader": "^1.3.0",
+    "react-toolbox": "^0.14.0",
+    "redux-simple-localstorage": "^1.0.2",
+    "sass-loader": "^3.1.2",
+    "webpack-hot-middleware": "^2.6.0"
   }
 }

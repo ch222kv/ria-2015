@@ -9,7 +9,6 @@ import actions from "../actions";
 import _ from "lodash";
 
 import ContactProfilePage from "./contact_profile_page";
-import Search from "./search";
 
 import ReactRedux, { connect } from "react-redux";
 
