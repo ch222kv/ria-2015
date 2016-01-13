@@ -1,4 +1,6 @@
-# Flux
+# My deep dive will be about the differences between Flux and Redux
+## This is not the actual deep dive, it will pop up a little later
+
 Differences at a glance.
 * A separate store for each thing to store? In Redux there is only one of them, so that you could feasibly inject it by the React-Redux Provider component into the smart components.
 * waitFor, is it really needed? But how would you handle the case that they use with the flight destination form? In flux it seems to be okay for several stores to depend on each other, and do stuff differently based on that. However, in Redux the changing of the stores data would be handled in a reducer, and they should not depend on other things other htan what they get passed and the same stores data, which means that either we have all data, or we don't.
