@@ -1,0 +1,6 @@
+# The final blogpost
+I really liked this course, and most of it can probably be explained by the way that the course worked. I liked the whole interaction-as-a-requirement (IAAR :D). It was a lot different from the other courses that I have read, which made for a pleasant change.  
+For some reason, it took quite a while to get the initial code to actually work, and that was probably my fault. When I got going, everything made a lot more sense (except for Webpack, </rant>). It was also interesting to try something new, because I haven't worked with React before.  
+My own effort. I could have worked a lot harder than I did. I came into the course a little late, so I should have worked harder to compensate for it. However, that is not an excuse, just a bad explanation.  
+Working with React and the other libraries was really pleasant, and I think that I can probably go out and make something more productive with it now.  
+I also really enjoyed the one on one talks with David, and also the pull request suggestions that slowly and surely pushed you in the right direction. Makes for a great teaching experience.
